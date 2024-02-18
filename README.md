@@ -15,10 +15,17 @@
 
 ### How it works
 
-The application uses a DuckDB instance to store historical prices of instruments. 
+The application stores historical prices of instruments in a DuckDB database file. 
 
-End of day prices are first fetched from Yahoo finance but only missing time ranges compared to existing data in the lookback period.
+End of day prices are fetched from Yahoo finance API - but ingestion is incremental ie. we only fetch prices for missing data in the lookback period.
 
-The `instrument_info.csv` file in resources folder contains a list of instruments for which historical data needs to be fetched (as per `lookback_period` in fintracker/consts file)
+The `resources\instrument_info.csv` file contains a list of instruments for which historical data needs to be fetched (as per `lookback_period` in `fintracker/consts` file)
 
-This script supports exports of data to a PostgreSQL database for visualisation in Grafana. For that pass in the required arguments and set relevant environment variables. 
+This script supports exporting data to a PostgreSQL database.
+Use case for this was to allow visualisation using Grafana. 
+For that you should just pass in the required arguments and set relevant environment variables. 
+
+### Dev setup
+
+Please refer to [this article](https://dorianbg.github.io/posts/python-project-setup-best-practice/).
+After setting up pyenv and Poetry, it should be straight forward to run the script.
