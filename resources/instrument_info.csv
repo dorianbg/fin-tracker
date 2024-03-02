@@ -1,56 +1,48 @@
-#,ticker,ticker_full,currency,description,fund_type,alt_ticker
-1,CSUKS,CSUKS.SW,GBP,iShares MSCI UK Small Cap UCITS ETF,acc,
-2,IMEU,IMEU.AS,EUR,iShares Core MSCI Europe UCITS ETF,acc,
-3,IEFV,IEFV.L,GBP,iShares Edge MSCI Europe Value Factor UCITS ETF,acc,
-4,CSX5,CSX5.L,EUR,iShares STOXX Europe 50 UCITS ETF,acc,EUN
-5,EUMD,EUMD.L,EUR,iShares MSCI Europe Mid Cap ETF EUR Acc,acc,DJMC
-6,CUKX,CUKX.L,GBP,iShares Core FTSE 100 UCITS ETF,acc,ISF
-7,ISFD,ISFD.L,USD,iShares Core FTSE 100 UCITS ETF - USD hedged,acc,
-8,IUKD,IUKD.L,GBP,iShares UK Dividend UCITS ETF,dist,SAME
-9,VMIG,VMIG.L,GBP,Vanguard FTSE 250 UCITS ETF,acc,
-10,CNX1,CNX1.L,GBP,iShares NASDAQ 100 UCITS ETF,acc,
-11,VUAG,VUAG.L,GBP,VANGUARD FUNDS PLC S&P 500 UCITS ETF,acc,
-12,GSPX,GSPX.L,GBP,iShares Core S&P 500 UCITS ETF-GBP Hedged,dist,SAME
-13,EWSP,EWSP.L,GBP,iShares S&P 500 Equal Weight UCITS ETF,acc,
-14,ISPE,ISPE.L,GBP,iShares S&P 500 Equal Weight UCITS ETF-GBP Hedged,acc,
-15,ISP6,IDP6.L,USD,iShares S&P SmallCap 600 UCITS ETF,dist,ISP6.L
-17,USLV,USLV.L,GBP,SPDR® S&P® 500 Low Volatility UCITS ETF,acc,
-18,CSCA,CSCA.L,GBP,iShares MSCI Canada UCITS ETF,acc,
-19,IAPD,IAPD.SW,USD,iShares Asia Pacific Dividend UCITS ETF,dist,IAPD.L
-20,CPJ1,CPJ1.L,GBP,iShares Core MSCI Pacific ex-Japan UCITS ETF,acc,
-21,CJPU,CJPU.L,USD,iShares MSCI Japan UCITS ETF,acc,
-22,IJPH,IJPH.L,GBP,iShares MSCI Japan UCITS ETF - GBP Hedged,acc,
-23,ISJP,ISJP.L,USD,iShares MSCI Japan Small Cap UCITS ETF,dist,
-24,FXC,FXAC.AS,EUR,iShares China Large Cap UCITS ETF,acc,
-25,IASH,IASH.L,GBP,iShares MSCI China A UCITS ETF,acc,
-26,IIND,IIND.L,GBP,iShares MSCI India UCITS ETF USD Acc,acc,
-27,LTAM,DLTM.L,USD,iShares MSCI EM Latin America UCITS ETF,dist,DLTM.L
-28,IEMI,IEMI.L,GBP,iShares EM Infrastructure UCITS ETF,acc,
-29,EMVL,EMVL.L,USD,iShares Edge MSCI EM Value Factor UCITS ETF,acc,
-30,SEDY,IEDY.L,USD,iShares EM Dividend UCITS ETF,dist,SEDY.L
-31,IEMS,IEMS.L,USD,iShares MSCI EM Small Cap UCITS ETF,dist,SAME
-32,SEGA,EUNH.DE,EUR,iShares Core € Govt Bond UCITS ETF,dist,EUNH.DE
-33,IBGL,IBGL.AS,EUR,iShares € Govt Bond 15-30yr UCITS ETF,dist,IBGL.L
-34,IBTL,DTLA.L,USD,iShares $ Treasury Bond 20+yr UCITS ETF,dist,IBTL.L
-35,IDTG,IDTG.L,GBP,iShares $ Treasury Bond 20+yr UCITS ETF,dist,SAME
-36,IGLT,IGLT.L,GBP,iShares Core UK Gilts UCITS ETF,dist,SAME
-37,GLTL,GLTL.L,GBP,SPDR® Bloomberg 15+ Year Gilt UCITS ETF,dist,SAME
-38,SGEA,IGEA.L,USD,iShares Emerging Asia Local Govt Bond UCITS ETF,dist,SGEA.L
-39,ITPS,ITPS.L,GBP,iShares $ TIPS UCITS ETF,acc,
-40,ITPG,ITPG.L,GBP,iShares $ TIPS UCITS ETF - GBP hedged,dist,SAME
-41,INXG,INXG.L,GBP,iShares £ Index-Linked Gilts UCITS ETF,dist,SAME
-42,GILI,GILI.L,GBP,LYXOR CORE UK GOVERNMENT INFLATION-LINK UCITS ETF (GILI),dist,SAME
-43,IBCI,IBCI.L,GBP,iShares € Inflation Linked Govt Bond UCITS ETF,acc,
-44,IB01,IB01.L,USD,iShares $ Treasury Bond 0-1yr UCITS ETF,acc,
-45,TP05,TIP5.L,USD,iShares $ TIPS 0-5 UCITS ETF,dist,TP05.L
-46,TI5G,TI5G.L,GBP,iShares $ TIPS 0-5 UCITS ETF,dist,SAME
-47,IGLS,IGLS.L,GBP,iShares UK Gilts 0-5yr UCITS ETF,dist,SAME
-48,DPYA,DPYA.L,USD,iShares Developed Markets Property Yield UCITS ETF,acc,
-49,DPYG,DPYG.L,GBP,iShares Developed Markets Property Yield UCITS ETF,dist,SAME
-50,IASP,IASP.SW,USD,iShares Asia Property Yield UCITS ETF,dist,IASP.L
-51,HEAL,HEAL.L,USD,iShares Healthcare Innovation UCITS ETF,acc,
-52,AGED,AGED.L,USD,iShares Ageing Population UCITS ETF,acc,
-53,RBOT,RBOT.L,USD,iShares Automation & Robotics UCITS ETF,acc,
-54,INRG,INRG.L,GBP,iShares Global Clean Energy UCITS ETF,acc,
-55,CSINDU,CSINDU.SW,USD,iShares Dow Jones Industrial Average UCITS ETF,acc,
-56,CSBGE7,CSBGE7.SW,EUR,iShares € Govt Bond 3-7yr UCITS ETF,acc,
+ticker,ticker_full,currency,description,fund_type,alt_ticker
+CSUKS,CSUKS.SW,GBP,iShares MSCI UK Small Cap UCITS ETF,acc,
+IMEU,IMEU.AS,EUR,iShares Core MSCI Europe UCITS ETF,acc,
+CSX5,CSX5.L,EUR,iShares STOXX Europe 50 UCITS ETF,acc,EUN
+EUMD,EUMD.L,EUR,iShares MSCI Europe Mid Cap ETF EUR Acc,acc,DJMC
+CUKX,CUKX.L,GBP,iShares Core FTSE 100 UCITS ETF,acc,ISF
+ISFD,ISFD.L,USD,iShares Core FTSE 100 UCITS ETF - USD hedged,acc,
+IUKD,IUKD.L,GBP,iShares UK Dividend UCITS ETF,dist,SAME
+VMIG,VMIG.L,GBP,Vanguard FTSE 250 UCITS ETF,acc,
+CNDX,CNDX.L,USD,iShares NASDAQ 100 UCITS ETF,acc,
+VUAG,VUAG.L,GBP,VANGUARD FUNDS PLC S&P 500 UCITS ETF,acc,
+IGUS,IGUS.L,GBP,iShares Core S&P 500 UCITS ETF-GBP Hedged,acc,SAME
+EWSP,EWSP.L,GBP,iShares S&P 500 Equal Weight UCITS ETF,acc,
+ISPE,ISPE.L,GBP,iShares S&P 500 Equal Weight UCITS ETF-GBP Hedged,acc,
+ISP6,IDP6.L,USD,iShares S&P SmallCap 600 UCITS ETF,dist,ISP6.L
+USLV,USLV.L,GBP,SPDR® S&P® 500 Low Volatility UCITS ETF,acc,
+CSINDU,CSINDU.SW,USD,iShares Dow Jones Industrial Average UCITS ETF,acc,
+CSCA,CSCA.SW,USD,iShares MSCI Canada UCITS ETF,acc,
+CJPU,CJPU.L,USD,iShares MSCI Japan UCITS ETF,acc,
+IJPH,IJPH.L,GBP,iShares MSCI Japan UCITS ETF - GBP Hedged,acc,
+FXC,FXAC.AS,EUR,iShares China Large Cap UCITS ETF,acc,
+CNYA,CNYA.L,USD,iShares MSCI China A UCITS ETF,acc,IASH
+IIND,IIND.L,GBP,iShares MSCI India UCITS ETF USD Acc,acc,
+LTAM,DLTM.L,USD,iShares MSCI EM Latin America UCITS ETF,dist,DLTM.L
+IEMI,IEMI.L,GBP,iShares EM Infrastructure UCITS ETF,acc,
+EMVL,EMVL.L,USD,iShares Edge MSCI EM Value Factor UCITS ETF,acc,
+SEDY,IEDY.L,USD,iShares EM Dividend UCITS ETF,dist,SEDY.L
+SEGA,EUNH.DE,EUR,iShares Core € Govt Bond UCITS ETF,dist,EUNH.DE
+IBGL,IBGL.AS,EUR,iShares € Govt Bond 15-30yr UCITS ETF,dist,IBGL.L
+IBTL,DTLA.L,USD,iShares $ Treasury Bond 20+yr UCITS ETF,dist,IBTL.L
+IDTG,IDTG.L,GBP,iShares $ Treasury Bond 20+yr UCITS ETF,dist,SAME
+IGLT,IGLT.L,GBP,iShares Core UK Gilts UCITS ETF,dist,SAME
+GLTL,GLTL.L,GBP,SPDR® Bloomberg 15+ Year Gilt UCITS ETF,dist,SAME
+ITPS,ITPS.L,GBP,iShares $ TIPS UCITS ETF,acc,
+ITPG,ITPG.L,GBP,iShares $ TIPS UCITS ETF - GBP hedged,dist,SAME
+INXG,INXG.L,GBP,iShares £ Index-Linked Gilts UCITS ETF,dist,SAME
+GILI,GILI.L,GBP,LYXOR CORE UK GOVERNMENT INFLATION-LINK UCITS ETF (GILI),dist,SAME
+IBCI,IBCI.L,GBP,iShares € Inflation Linked Govt Bond UCITS ETF,acc,
+IB01,IB01.L,USD,iShares $ Treasury Bond 0-1yr UCITS ETF,acc,
+TP05,TIP5.L,USD,iShares $ TIPS 0-5 UCITS ETF,dist,TP05.L
+TI5G,TI5G.L,GBP,iShares $ TIPS 0-5 UCITS ETF,dist,SAME
+IGLS,IGLS.L,GBP,iShares UK Gilts 0-5yr UCITS ETF,dist,SAME
+CSBGE7,CSBGE7.SW,EUR,iShares € Govt Bond 3-7yr UCITS ETF,acc,
+DPYA,DPYA.L,USD,iShares Developed Markets Property Yield UCITS ETF,acc,
+DPYG,DPYG.L,GBP,iShares Developed Markets Property Yield UCITS ETF - GBP Hedged,dist,SAME
+IASP,IASP.SW,USD,iShares Asia Property Yield UCITS ETF,dist,IASP.L
+HEAL,HEAL.L,USD,iShares Healthcare Innovation UCITS ETF,acc,
+INRG,INRG.L,GBP,iShares Global Clean Energy UCITS ETF,acc,

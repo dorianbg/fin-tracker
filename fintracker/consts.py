@@ -1,8 +1,8 @@
 import os
 import pathlib
 
-lookback_period = '10 years'
-timezone = 'Europe/Paris'
+lookback_period = "10 years"
+timezone = "Europe/Paris"
 
 # returns the repository root path - depends on location of this file in repo
 file_parent_dir = pathlib.Path(__file__).parent.parent.resolve()
@@ -16,24 +16,24 @@ pickle_ext = ".pickle"
 
 hist_prices_table_name = "historical_prices"
 hist_prices_cols_to_datatype = {
-    'ticker': 'VARCHAR',
-    'ticker_full': 'VARCHAR',
-    '"date"': 'TIMESTAMPTZ',
-    '"open"': 'DOUBLE',
-    'high': 'DOUBLE',
-    'low': 'DOUBLE',
-    '"close"': 'DOUBLE',
-    'volume': 'BIGINT',
-    'dividends': 'DOUBLE',
-    'stock_splits': 'DOUBLE'
+    "ticker": "VARCHAR",
+    "ticker_full": "VARCHAR",
+    '"date"': "TIMESTAMPTZ",
+    '"open"': "DOUBLE",
+    "high": "DOUBLE",
+    "low": "DOUBLE",
+    '"close"': "DOUBLE",
+    "volume": "BIGINT",
+    "dividends": "DOUBLE",
+    "stock_splits": "DOUBLE",
 }
 hist_prices_col_select = ",".join(hist_prices_cols_to_datatype.keys())
 
 dividend_tracker_table_name = "data_backups"
 dividend_tracker_cols_to_datatype = {
-    'ticker_full': 'VARCHAR',
-    '"create_timestamp"': 'TIMESTAMPTZ',
-    'backup_save_path': 'VARCHAR'
+    "ticker_full": "VARCHAR",
+    '"create_timestamp"': "TIMESTAMPTZ",
+    "backup_save_path": "VARCHAR",
 }
 
 create_table_stmt = f"""
@@ -46,13 +46,19 @@ create_table_stmt = f"""
 """
 
 inst_info_file = os.path.join(file_parent_dir, "resources", "instrument_info.csv")
-columns  = {'#': 'INTEGER', 'ticker': 'VARCHAR', 'ticker_full': 'VARCHAR', 'currency': 'VARCHAR',
-                     'description': 'VARCHAR', 'fund_type': 'VARCHAR', 'alt_ticker': 'VARCHAR'}
+columns = {
+    "ticker": "VARCHAR",
+    "ticker_full": "VARCHAR",
+    "currency": "VARCHAR",
+    "description": "VARCHAR",
+    "fund_type": "VARCHAR",
+    "alt_ticker": "VARCHAR",
+}
 
 create_instr_ref = f"""
 drop table if exists ticker_ref;
 create table ticker_ref as 
-select "#" as rown, ticker, ticker_full, currency, description, fund_type, alt_ticker
+select ticker, ticker_full, currency, description, fund_type, alt_ticker
 from read_csv('{inst_info_file}', delim = ',', header = true, columns = {columns}); 
 """
 

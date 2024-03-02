@@ -4,8 +4,14 @@ import time
 import pandas as pd
 import yfinance as yf
 from fintracker import consts
-from fintracker.utils import add_csv_ext, add_pickle_ext, JobDef, get_duckdb_conn, missing_timerange, \
-    insert_df_to_duckdb
+from fintracker.utils import (
+    add_csv_ext,
+    add_pickle_ext,
+    JobDef,
+    get_duckdb_conn,
+    missing_timerange,
+    insert_df_to_duckdb,
+)
 import os
 from pathlib import Path
 import traceback
@@ -17,12 +23,17 @@ __duckdb_conn = None
 def get_transformed_df(job: JobDef):
     etf = yf.Ticker(ticker=job.ticker_full)
     etf.tz = "UTC"
-    df = etf.history(interval="1d", start=job.start_date.strftime("%Y-%m-%d"),
-                     end=job.end_date.strftime("%Y-%m-%d"))
+    df = etf.history(
+        interval="1d",
+        start=job.start_date.strftime("%Y-%m-%d"),
+        end=job.end_date.strftime("%Y-%m-%d"),
+    )
     df = df.reset_index()
-    df['ticker'] = job.ticker_full.split(".")[0]
-    df['ticker_full'] = job.ticker_full
-    df.rename(columns={x: x.lower().replace(" ", "_") for x in df.columns}, inplace=True)
+    df["ticker"] = job.ticker_full.split(".")[0]
+    df["ticker_full"] = job.ticker_full
+    df.rename(
+        columns={x: x.lower().replace(" ", "_") for x in df.columns}, inplace=True
+    )
     return df
 
 
@@ -35,44 +46,56 @@ def upload_data_to_postgres():
     port = os.environ["POSTGRES_PORT"]
 
     # Create a connection string
-    connection_str = f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}'
+    connection_str = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
     engine = create_engine(connection_str)
 
     table_name = "latest_performance"
     df = __duckdb_conn.sql(f"select * from {table_name}").df()
-    df.to_sql(table_name, engine, index=False, if_exists='replace')
+    df.to_sql(table_name, engine, index=False, if_exists="replace")
     logging.info(f"Inserted df with shape {df.shape} to {table_name}")
 
 
 def check_for_dividends(df: pd.DataFrame) -> bool:
-    return not df.empty and (df['dividends'] > 0).any()
+    return not df.empty and (df["dividends"] > 0).any()
 
 
 def check_existing_data(ticker_full: str) -> bool:
     global __duckdb_conn
-    res = __duckdb_conn.execute(f"select count(*) as cnt from {consts.hist_prices_table_name} "
-                                f"where ticker_full like '%{ticker_full}%'").fetchdf()
-    return res['cnt'][0] > 0
+    res = __duckdb_conn.execute(
+        f"select count(*) as cnt from {consts.hist_prices_table_name} "
+        f"where ticker_full like '%{ticker_full}%'"
+    ).fetchdf()
+    return res["cnt"][0] > 0
 
 
 def backup_existing_data(ticker_full: str) -> int:
     global __duckdb_conn
-    res = __duckdb_conn.execute(f"select * from {consts.hist_prices_table_name} "
-                                f"where ticker_full like '%{ticker_full}%'").fetchdf()
+    res = __duckdb_conn.execute(
+        f"select * from {consts.hist_prices_table_name} "
+        f"where ticker_full like '%{ticker_full}%'"
+    ).fetchdf()
     min_date = res["date"].min().strftime("%Y-%m-%d")
     max_date = res["date"].max().strftime("%Y-%m-%d")
-    csv_path = add_csv_ext(create_out_path(dir=consts.store_raw_dir, ticker_full=ticker_full, start_date=min_date,
-                                           end_date=max_date))
+    csv_path = add_csv_ext(
+        create_out_path(
+            dir=consts.store_raw_dir,
+            ticker_full=ticker_full,
+            start_date=min_date,
+            end_date=max_date,
+        )
+    )
     res.to_csv(csv_path)
     tmp = pd.read_csv(filepath_or_buffer=csv_path)
     assert len(tmp) == len(res)
-    __duckdb_conn.execute(f"insert into {consts.dividend_tracker_table_name} values "
-                          f"('{ticker_full}', now(), '{csv_path}')")
+    __duckdb_conn.execute(
+        f"insert into {consts.dividend_tracker_table_name} values "
+        f"('{ticker_full}', now(), '{csv_path}')"
+    )
     return len(tmp)
 
 
 def delete_existing_data(ticker_full: str) -> bool:
-    del_q = (f"delete from {consts.hist_prices_table_name} where ticker_full = '{ticker_full}'")
+    del_q = f"delete from {consts.hist_prices_table_name} where ticker_full = '{ticker_full}'"
     global __duckdb_conn
     cur = __duckdb_conn.cursor()
     cur.execute("BEGIN TRANSACTION;")
@@ -92,8 +115,12 @@ def execute_job(job: JobDef):
     if start_date_str == end_date_str or start_date_str > end_date_str:
         return pd.DataFrame()
 
-    base_temp_path = create_out_path(dir=consts.store_raw_dir, ticker_full=job.ticker_full,
-                                     start_date=start_date_str, end_date=end_date_str)
+    base_temp_path = create_out_path(
+        dir=consts.store_raw_dir,
+        ticker_full=job.ticker_full,
+        start_date=start_date_str,
+        end_date=end_date_str,
+    )
     output_dir = Path(base_temp_path).parent
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -104,10 +131,13 @@ def execute_job(job: JobDef):
         return pd.read_pickle(pickle_path)
     # call YF API
     hist: pd.DataFrame = get_transformed_df(job=job)
+    if args.rewrite_all and args.skip_backup:
+        delete_existing_data(ticker_full=job.ticker_full)
+        logging.info(f"Deleted existing data for {job}")
     # issue with YF adjusting dividends which skews past prices - we then back, delete and re-download the data
-    if check_for_dividends(hist):
-        logging.info(f"Found dividends for {job}")
+    elif check_for_dividends(hist) or args.rewrite_all:
         if check_existing_data(ticker_full=job.ticker_full):
+            logging.info(f"Found dividends for {job}")
             backup_row_count = backup_existing_data(ticker_full=job.ticker_full)
             logging.info(f"Backed up {backup_row_count} rows for {job}")
             if backup_row_count > 0:
@@ -116,12 +146,13 @@ def execute_job(job: JobDef):
                     return pd.DataFrame()
 
     logging.info(
-        f"Downloaded {len(hist)} rows for {job.ticker_full} in time range {start_date_str} and {end_date_str}")
+        f"Downloaded {len(hist)} rows for {job.ticker_full} in time range {start_date_str} and {end_date_str}"
+    )
     if not hist.empty:
         hist.to_csv(csv_path)
         hist.to_pickle(pickle_path)
 
-    time.sleep(4)
+    time.sleep(3)
     return hist
 
 
@@ -134,16 +165,26 @@ def merge_dfs(dfs_to_insert):
     return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser("fintracker")
+    parser.add_argument("--rewrite_all", action=argparse.BooleanOptionalAction)
+    parser.add_argument("--skip_backup", action=argparse.BooleanOptionalAction)
     parser.add_argument("--upload_to_postgres", action=argparse.BooleanOptionalAction)
     args = parser.parse_args()
 
-    __duckdb_conn = get_duckdb_conn(filepath=consts.db_path,
-                                    init_cmd=consts.create_table_stmt + consts.settings_init_cmd +
-                                             consts.create_instr_ref + consts.consts_perf_view)
-    missing_prices = missing_timerange(__duckdb_conn)
-    missing_prices_jobs = [JobDef(ticker_full=j[0], start_date=j[1], end_date=j[2]) for j in missing_prices]
+    __duckdb_conn = get_duckdb_conn(
+        filepath=consts.db_path,
+        init_cmd=consts.create_table_stmt
+        + consts.settings_init_cmd
+        + consts.create_instr_ref
+        + consts.consts_perf_view,
+    )
+    missing_prices = missing_timerange(
+        __duckdb_conn, mark_all_as_missing=args.rewrite_all
+    )
+    missing_prices_jobs = [
+        JobDef(ticker_full=j[0], start_date=j[1], end_date=j[2]) for j in missing_prices
+    ]
     dfs_to_insert = []
     current_job = None
     try:
@@ -151,12 +192,18 @@ if __name__ == '__main__':
             current_job = job
             dfs_to_insert.append(execute_job(current_job))
     except Exception as e:
-        logging.error(f"Exception {e} with job {current_job} with traceback {traceback.format_exc()}")
+        logging.error(
+            f"Exception {e} with job {current_job} with traceback {traceback.format_exc()}"
+        )
     finally:
         merged_dfs = merge_dfs(dfs_to_insert=dfs_to_insert)
-        insert_df_to_duckdb(conn=__duckdb_conn, dataframe=merged_dfs, table_name=consts.hist_prices_table_name,
-                            col_select=consts.hist_prices_col_select,
-                            dedup=f"EXCEPT select {consts.hist_prices_col_select} from {consts.hist_prices_table_name}")
+        insert_df_to_duckdb(
+            conn=__duckdb_conn,
+            dataframe=merged_dfs,
+            table_name=consts.hist_prices_table_name,
+            col_select=consts.hist_prices_col_select,
+            dedup=f"EXCEPT select {consts.hist_prices_col_select} from {consts.hist_prices_table_name}",
+        )
         __duckdb_conn.commit()
         if args.upload_to_postgres:
             upload_data_to_postgres()
