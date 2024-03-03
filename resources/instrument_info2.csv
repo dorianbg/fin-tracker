@@ -1,0 +1,70 @@
+ticker,description,currency,fund_type
+SPY,S&P 500 Index,USD,equities
+IWM,iShares Russell 2000,USD,equities
+QQQ,Powershares Trust Ser 1,USD,equities
+XLF,S&P Financial Sector,USD,equities
+XLI,S&P Industrial Sector,USD,equities
+XLV,S&P Health Care Sector,USD,equities
+XLE,S&P Energy Sector,USD,equities
+XLP,S&P Consumer Staples Sector,USD,equities
+XLY,S&P Consumer Discetionary Sector,USD,equities
+XLU,S&P Utilities Sector,USD,equities
+XLK,S&P Technology Sector,USD,equities
+XLB,S&P Materials Sector,USD,equities
+XLC,S&P Communication Services Sector,USD,equities
+XLRE,S&P Real Estate Sector,USD,equities
+XTL,S&P Telecom Sector,USD,equities
+IYT,iShares Transport,USD,equities
+DIA,Dow Jones Industrial Average ETF,USD,equities
+EWU,iShares MSCI UK,USD,equities
+EWG,iShares MSCI Germany,USD,equities
+ITA,iShares US Aerospace & Defense ETF,USD,equities
+XBI,SPDR S&P Biotech ETF,USD,equities
+FEZ,SPDR EURO Stoxx50,USD,equities
+XBI,iShares MSCI ACWI ETFSPDR S&P Biotech ETF,USD,equities
+IHI,iShares US Medical Devices ETF,USD,equities
+IBB,iShares Biotechnology ETF,USD,equities
+KRE,SPDR S&P Regional Banking ETF,USD,equities
+SOXX,iShares Semiconductor ETF,USD,equities
+SMH,VanEck Semiconductor ETF,USD,equities
+GDX,VanEck Gold Miners ETF,USD,equities
+EWJ,iShares MSCI Japan,USD,equities
+INDA,iShares MSCI India,USD,equities
+FXI,iShares China Large Cap,USD,equities
+EWZ,iShares MSCI Brazil,USD,equities
+EWA,iShares MSCI Australia,USD,equities
+EEM,iShares MSCI Emerging Mkt,USD,equities
+EEMS,iShares MSCI Emerging Markets Small-Cap,USD,equities
+ILF,iShares Latin America 40,USD,equities
+EWW,iShares Mexico,USD,equities
+VUKG.L,Vanguard FTSE 100 UCITS ETF GBP Accumulation,GBP,equities
+ISFD.L,iShares Core FTSE 100 UCITS ETF USD Hedged (Acc),USD,equities
+EUMD.L,iShares MSCI Europe Mid Cap ETF EUR Acc,EUR,equities
+VMIG.L,Vanguard FTSE 250 UCITS ETF,GBP,equities
+EWSP.L,iShares S&P 500 Equal Weight UCITS ETF,GBP,equities
+ISPE.L,iShares S&P 500 Equal Weight UCITS ETF-GBP Hedged,GBP,equities
+IJPH.L,iShares MSCI Japan UCITS ETF - GBP Hedged,GBP,equities
+CNYA.L,iShares MSCI China A UCITS ETF,USD,equities
+IEDY.L,iShares EM Dividend UCITS ETF,USD,equities
+DPYA.L,iShares Developed Markets Property Yield UCITS ETF,USD,equities
+DPYG.L,iShares Developed Markets Property Yield UCITS ETF - GBP Hedged,GBP,equities
+IASP.SW,iShares Asia Property Yield UCITS ETF,USD,equities
+IBGL.AS,iShares € Govt Bond 15-30yr UCITS ETF,EUR,equities
+LOWV.L,SPDR® S&P® 500 Low Volatility UCITS ETF,GBP,equities
+AGG,iShares JPM USD Emerg MktEMB iShares Core US,USD,bonds
+TLT,iShares 20+ Treasury,USD,bonds
+IEF,iShares 7-10 Treasury,USD,bonds
+HYG,iShares High Yield Core,USD,bonds
+LQD,iShares Interest Rate Hedged High Yield Bond,USD,bonds
+TIP,iShares Tips Bond,USD,bonds
+STIP,iShares 0-5 Year TIPS Bond ETF,USD,bonds
+INXG.L,iShares £ Index-Linked Gilts UCITS ETF,GBP,bonds
+GLTL.L,SPDR® Bloomberg 15+ Year Gilt UCITS ETF,GBP,bonds
+IDTG.L,iShares $ Treasury Bond 20+yr UCITS ETF GBP Hedged,GBP,bonds
+ITPG.L,iShares $ TIPS UCITS ETF - GBP hedged,GBP,bonds
+IAU,iShares Gold Trust,USD,commodities
+GLD,SPDR Gold Shares,USD,commodities
+GSG,iShares S&P GSCI Commodity-Indexed Trust,USD,commodities
+VDE,Vanguard Energy Index Fund ETF,USD,commodities
+ICLN,iShares Global Clean Energy ETF,USD,commodities
+CPER,United States Copper Index Fund,USD,commodities

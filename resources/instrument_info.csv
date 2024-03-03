@@ -28,7 +28,7 @@ SEDY,IEDY.L,USD,iShares EM Dividend UCITS ETF,dist,SEDY.L
 SEGA,EUNH.DE,EUR,iShares Core € Govt Bond UCITS ETF,dist,EUNH.DE
 IBGL,IBGL.AS,EUR,iShares € Govt Bond 15-30yr UCITS ETF,dist,IBGL.L
 IBTL,DTLA.L,USD,iShares $ Treasury Bond 20+yr UCITS ETF,dist,IBTL.L
-IDTG,IDTG.L,GBP,iShares $ Treasury Bond 20+yr UCITS ETF,dist,SAME
+IDTG,IDTG.L,GBP,iShares $ Treasury Bond 20+yr UCITS ETF GBP Hedged,dist,SAME
 IGLT,IGLT.L,GBP,iShares Core UK Gilts UCITS ETF,dist,SAME
 GLTL,GLTL.L,GBP,SPDR® Bloomberg 15+ Year Gilt UCITS ETF,dist,SAME
 ITPS,ITPS.L,GBP,iShares $ TIPS UCITS ETF,acc,

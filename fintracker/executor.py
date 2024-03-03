@@ -143,7 +143,7 @@ def execute_job(job: JobDef):
             if backup_row_count > 0:
                 if delete_existing_data(ticker_full=job.ticker_full):
                     logging.info(f"Deleted existing data for {job}")
-                    return pd.DataFrame()
+                    # return pd.DataFrame()
 
     logging.info(
         f"Downloaded {len(hist)} rows for {job.ticker_full} in time range {start_date_str} and {end_date_str}"

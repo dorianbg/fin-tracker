@@ -45,20 +45,39 @@ create_table_stmt = f"""
     );
 """
 
-inst_info_file = os.path.join(file_parent_dir, "resources", "instrument_info.csv")
-columns = {
-    "ticker": "VARCHAR",
-    "ticker_full": "VARCHAR",
-    "currency": "VARCHAR",
-    "description": "VARCHAR",
-    "fund_type": "VARCHAR",
-    "alt_ticker": "VARCHAR",
-}
+
+def strtobool(value: str) -> bool:
+    value = value.lower()
+    if value in ("y", "yes", "on", "1", "true", "t"):
+        return True
+    return False
+
+
+if strtobool(os.getenv("LEGACY_MODE", "0")):
+    inst_info_file = os.path.join(file_parent_dir, "resources", "instrument_info.csv")
+    columns = {
+        "ticker": "VARCHAR",
+        "ticker_full": "VARCHAR",
+        "currency": "VARCHAR",
+        "description": "VARCHAR",
+        "fund_type": "VARCHAR",
+        "alt_ticker": "VARCHAR",
+    }
+    extra_cols = ""
+else:
+    inst_info_file = os.path.join(file_parent_dir, "resources", "instrument_info2.csv")
+    columns = {
+        "ticker": "VARCHAR",
+        "description": "VARCHAR",
+        "currency": "VARCHAR",
+        "fund_type": "VARCHAR",
+    }
+    extra_cols = ", ticker as ticker_full"
 
 create_instr_ref = f"""
 drop table if exists ticker_ref;
 create table ticker_ref as 
-select ticker, ticker_full, currency, description, fund_type, alt_ticker
+select {','.join(columns.keys())} {extra_cols}
 from read_csv('{inst_info_file}', delim = ',', header = true, columns = {columns}); 
 """
 
