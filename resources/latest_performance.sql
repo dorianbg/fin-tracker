@@ -45,9 +45,38 @@ select ticker,
        volume,
 --        dividends * ccy_conversion as dividend_conv,
        currency,
+       'GBP' as currency_converted,
        description,
        fund_type
 from prices_w_exchange_rate;
+
+
+create or replace view instrument_annualised_volatility as
+WITH log_returns AS (
+    SELECT
+        ticker_full,
+        "date",
+        "price",
+        LN(h.price / LAG(h.price) OVER (PARTITION BY h.ticker ORDER BY date)) AS log_return
+    FROM total_return h
+    WHERE date between current_date - interval '1 year' and current_date
+),
+-- Step 2: Calculate Daily Volatility
+daily_volatility AS (
+    SELECT
+        ticker_full,
+        STDDEV_POP(log_return) AS daily_volatility
+    FROM log_returns
+    GROUP BY ticker_full
+)
+-- Step 3: Annualize Volatility
+SELECT
+    ticker_full,
+    daily_volatility as vol_1d,
+    daily_volatility * SQRT(252) AS vol_1y
+FROM
+    daily_volatility;
+
 
 create or replace view latest_performance as
 with stage1 as (
@@ -57,6 +86,7 @@ with stage1 as (
         "date",
         "price",
         description,
+        fund_type,
         "price" - (lag("price", 1, 0) over one_year) as day_price_diff,
         "price" - (lag("price", 5, 0) over one_year) as week_price_diff,
         "price" - (lag("price", 10, 0) over one_year) as two_week_price_diff,
@@ -67,7 +97,7 @@ with stage1 as (
         "price" - (lag("price", 252, 0) over one_year) as year_price_diff,
         "price" - (lag("price", 2*252, 0) over one_year) as two_year_price_diff,
         "price" - (lag("price", 3*252, 0) over one_year) as three_year_price_diff,
-        "price" - (lag("price", 5*252, 0) over one_year) as five_year_price_diff,
+        "price" - (lag("price", 5*252, 0) over one_year) as five_year_price_diff
     from total_return h
     WINDOW
         one_year AS (
@@ -83,13 +113,13 @@ with stage1 as (
 ), stage2 as (
 SELECT
     ticker,
-    ticker as tckr,
     ticker_full,
     "date"::date as date,
     "date" as dt,
     row_number() over (partition by ticker order by date desc) as rown,
 --     "price",
     replace(replace(replace(description, 'iShares ', ''), 'MSCI ', ''), 'SPDR® ', '')  as description,
+    fund_type,
 -- returns
     round(("price" / ("price" - day_price_diff) - 1) * 100, 2) as r_1d,
     round(("price" / ("price" - week_price_diff) - 1) * 100, 2) as r_1w,
@@ -107,7 +137,8 @@ SELECT
     round(abs(two_week_price_diff) / (stddev_pop(two_week_price_diff) over one_month), 2) as z_2w,
     round(abs(month_price_diff) / (stddev_pop(month_price_diff) over one_month), 2) as z_1mo,
 -- moving averages
-    round(("price"/avg("price") over one_month - 1) * 100, 2) as px_20_dma,
+    round(("price"/avg("price") over one_month - 1) * 100, 2) as px_21_dma,
+    round(("price"/avg("price") over three_month - 1) * 100, 2) as px_63_dma,
     round(("price"/avg("price") over one_year - 1) * 100, 2) as px_252_dma
 FROM stage1
 WINDOW
@@ -120,9 +151,20 @@ WINDOW
         PARTITION BY ticker_full
         ORDER BY "date" ASC
         RANGE BETWEEN INTERVAL 21 DAYS PRECEDING AND current row
+    ),
+    three_month AS (
+            PARTITION BY ticker_full
+            ORDER BY "date" ASC
+            RANGE BETWEEN INTERVAL 63 DAYS PRECEDING AND current row
     )
 )
-select * from stage2 s
+select
+    s.*,
+    round(vol.vol_1d * 100, 2) as vol_1d,
+    round(vol.vol_1y * 100, 2) as vol_1y
+from stage2 s
+left join instrument_annualised_volatility vol
+    on s.ticker_full = vol.ticker_full
 where rown = 1
 -- and r_1w between -50 and 50
 order by s.dt desc;

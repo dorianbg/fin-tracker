@@ -1,4 +1,6 @@
 ticker,ticker_full,currency,description,fund_type,alt_ticker
+EURGBP=X,EURGBP=X,GBP,EUR to GBP,acc,
+GBP=X,GBP=X,GBP,USD to GBP,acc,
 CSUKS,CSUKS.SW,GBP,iShares MSCI UK Small Cap UCITS ETF,acc,
 IMEU,IMEU.AS,EUR,iShares Core MSCI Europe UCITS ETF,acc,
 CSX5,CSX5.L,EUR,iShares STOXX Europe 50 UCITS ETF,acc,EUN

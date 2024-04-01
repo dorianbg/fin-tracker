@@ -8,13 +8,17 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <3.13"
-duckdb = "0.10.0"
+duckdb = "0.10.1"
 pandas = "^2.1.1"
 yfinance = "^0.2.31"
 sqlalchemy = "^2.0.25"
 psycopg2-binary = "^2.9.9"
+pybind11 = "^2.11.1"
+numpy = "^1.26.4"
+cmake = "^3.28.3"
+riskfolio-lib = "^6.0.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core", "cmake"]
 build-backend = "poetry.core.masonry.api"
 

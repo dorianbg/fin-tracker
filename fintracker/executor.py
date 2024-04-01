@@ -40,8 +40,8 @@ def get_transformed_df(job: JobDef):
 def upload_data_to_postgres():
     global __duckdb_conn
     dbname = os.environ["POSTGRES_DB"]
-    user = os.environ["POSTGRES_USER"]
-    password = os.environ["POSTGRES_PASSWORD"]
+    user = os.environ["PGUSER"]
+    password = (os.environ.get("PGPASSWORD"),)
     host = os.environ["POSTGRES_HOST"]
     port = os.environ["POSTGRES_PORT"]
 
