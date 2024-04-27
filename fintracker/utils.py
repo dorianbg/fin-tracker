@@ -83,7 +83,7 @@ def missing_timerange(conn: duckdb.DuckDBPyConnection, mark_all_as_missing: bool
         select
             t.ticker_full as ticker,
             coalesce(h.latest_date, date_trunc('day', get_current_timestamp() at time zone '{consts.timezone}' - interval '{consts.lookback_period}')) + interval '1 day' as start_date,
-            date_trunc('day',get_current_timestamp() at time zone '{consts.timezone}')  as end_date
+            date_trunc('day',get_current_timestamp() at time zone '{consts.timezone}') + interval '1 day' as end_date
         from ticker_ref t left join (
             select
                 date_trunc('day',max("date" at time zone 'Europe/Paris')) as latest_date,

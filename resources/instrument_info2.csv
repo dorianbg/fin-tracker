@@ -1,70 +1,76 @@
 ticker,description,currency,fund_type
-SPY,S&P 500 Index,USD,equities
-IWM,iShares Russell 2000,USD,equities
+
+EURGBP=X,EUR to GBP,GBP,currency
+GBP=X,USD to GBP,GBP,currency
+
+CSP1.L,Core S&P 500 UCITS,GBP,equities
+IWM,Russell 2000,USD,equities
 QQQ,Powershares Trust Ser 1,USD,equities
-XLF,S&P Financial Sector,USD,equities
-XLI,S&P Industrial Sector,USD,equities
-XLV,S&P Health Care Sector,USD,equities
-XLE,S&P Energy Sector,USD,equities
-XLP,S&P Consumer Staples Sector,USD,equities
-XLY,S&P Consumer Discetionary Sector,USD,equities
-XLU,S&P Utilities Sector,USD,equities
-XLK,S&P Technology Sector,USD,equities
-XLB,S&P Materials Sector,USD,equities
-XLC,S&P Communication Services Sector,USD,equities
-XLRE,S&P Real Estate Sector,USD,equities
-XTL,S&P Telecom Sector,USD,equities
-IYT,iShares Transport,USD,equities
-DIA,Dow Jones Industrial Average ETF,USD,equities
-EWU,iShares MSCI UK,USD,equities
-EWG,iShares MSCI Germany,USD,equities
-ITA,iShares US Aerospace & Defense ETF,USD,equities
-XBI,SPDR S&P Biotech ETF,USD,equities
+DIA,Dow Jones Industrial Average,USD,equities
+EWG,MSCI Germany,USD,equities
 FEZ,SPDR EURO Stoxx50,USD,equities
-XBI,iShares MSCI ACWI ETFSPDR S&P Biotech ETF,USD,equities
-IHI,iShares US Medical Devices ETF,USD,equities
-IBB,iShares Biotechnology ETF,USD,equities
-KRE,SPDR S&P Regional Banking ETF,USD,equities
-SOXX,iShares Semiconductor ETF,USD,equities
-SMH,VanEck Semiconductor ETF,USD,equities
-GDX,VanEck Gold Miners ETF,USD,equities
-EWJ,iShares MSCI Japan,USD,equities
-INDA,iShares MSCI India,USD,equities
-FXI,iShares China Large Cap,USD,equities
-EWZ,iShares MSCI Brazil,USD,equities
-EWA,iShares MSCI Australia,USD,equities
-EEM,iShares MSCI Emerging Mkt,USD,equities
-EEMS,iShares MSCI Emerging Markets Small-Cap,USD,equities
-ILF,iShares Latin America 40,USD,equities
-EWW,iShares Mexico,USD,equities
-VUKG.L,Vanguard FTSE 100 UCITS ETF GBP Accumulation,GBP,equities
-ISFD.L,iShares Core FTSE 100 UCITS ETF USD Hedged (Acc),USD,equities
-EUMD.L,iShares MSCI Europe Mid Cap ETF EUR Acc,EUR,equities
-VMIG.L,Vanguard FTSE 250 UCITS ETF,GBP,equities
-EWSP.L,iShares S&P 500 Equal Weight UCITS ETF,GBP,equities
-ISPE.L,iShares S&P 500 Equal Weight UCITS ETF-GBP Hedged,GBP,equities
-IJPH.L,iShares MSCI Japan UCITS ETF - GBP Hedged,GBP,equities
-CNYA.L,iShares MSCI China A UCITS ETF,USD,equities
-IEDY.L,iShares EM Dividend UCITS ETF,USD,equities
-DPYA.L,iShares Developed Markets Property Yield UCITS ETF,USD,equities
-DPYG.L,iShares Developed Markets Property Yield UCITS ETF - GBP Hedged,GBP,equities
-IASP.SW,iShares Asia Property Yield UCITS ETF,USD,equities
-IBGL.AS,iShares € Govt Bond 15-30yr UCITS ETF,EUR,equities
-LOWV.L,SPDR® S&P® 500 Low Volatility UCITS ETF,GBP,equities
-AGG,iShares JPM USD Emerg MktEMB iShares Core US,USD,bonds
-TLT,iShares 20+ Treasury,USD,bonds
-IEF,iShares 7-10 Treasury,USD,bonds
-HYG,iShares High Yield Core,USD,bonds
-LQD,iShares Interest Rate Hedged High Yield Bond,USD,bonds
-TIP,iShares Tips Bond,USD,bonds
-STIP,iShares 0-5 Year TIPS Bond ETF,USD,bonds
-INXG.L,iShares £ Index-Linked Gilts UCITS ETF,GBP,bonds
-GLTL.L,SPDR® Bloomberg 15+ Year Gilt UCITS ETF,GBP,bonds
-IDTG.L,iShares $ Treasury Bond 20+yr UCITS ETF GBP Hedged,GBP,bonds
-ITPG.L,iShares $ TIPS UCITS ETF - GBP hedged,GBP,bonds
-IAU,iShares Gold Trust,USD,commodities
-GLD,SPDR Gold Shares,USD,commodities
-GSG,iShares S&P GSCI Commodity-Indexed Trust,USD,commodities
-VDE,Vanguard Energy Index Fund ETF,USD,commodities
-ICLN,iShares Global Clean Energy ETF,USD,commodities
-CPER,United States Copper Index Fund,USD,commodities
+EWJ,MSCI Japan,USD,equities
+INDA,MSCI India,USD,equities
+FXI,China Large Cap,USD,equities
+CNYA.L,MSCI China A,USD,equities
+EWZ,MSCI Brazil,USD,equities
+EWW,Mexico,USD,equities
+ILF,Latin America 40,USD,equities
+EWA,MSCI Australia,USD,equities
+EEM,MSCI Emerging Mkt,USD,equities
+EEMS,MSCI EM Small-Cap,USD,equities
+VUKG.L,FTSE 100 Acc,GBP,equities
+ISFD.L,Core FTSE 100 USD Hedged Acc,USD,equities
+EUMD.L,MSCI Europe Mid Cap EUR Acc,EUR,equities
+VMIG.L,FTSE 250,GBP,equities
+EWSP.L,S&P 500 Equal Weight,GBP,equities
+ISPE.L,S&P 500 Equal Weight-GBPH,GBP,equities
+IJPH.L,MSCI Japan - GBPH,GBP,equities
+IEDY.L,EM Dividend,USD,equities
+LOWV.L,SPDR® S&P® 500 Low Volatility,GBP,equities
+
+XLF,S&P Financial Sector,USD,eq-cyclical
+XLI,S&P Industrial Sector,USD,eq-cyclical
+XLE,S&P Energy Sector,USD,eq-cyclical
+XLY,S&P Consumer Discetionary Sector,USD,eq-cyclical
+XLK,S&P Technology Sector,USD,eq-cyclical
+SOXX,Semiconductor,USD,eq-cyclical
+GDX,VanEck Gold Miners,USD,eq-cyclical
+ICLN,Global Clean Energy,USD,eq-cyclical
+PICK,MSCI Global Metals & Mining Producers,USD,eq-cyclical
+
+XLV,S&P Health Care Sector,USD,eq-defensive
+XLP,S&P Consumer Staples Sector,USD,eq-defensive
+XLU,S&P Utilities Sector,USD,eq-defensive
+XTL,S&P Telecom Sector,USD,eq-defensive
+ITA,US Aerospace & Defense,USD,eq-defensive
+XBI,SPDR S&P Biotech,USD,eq-defensive
+VEGI,MSCI Agriculture Producers,USD,eq-defensive
+INFR.L,Global Infrastructure,GBP,eq-defensive
+
+DPYA.L,Dev. Markets Property,USD,eq-reit
+DPYG.L,Dev. Markets Property - GBPH,GBP,eq-reit
+IASP.SW,Asia Property,USD,eq-reit
+
+EMB,JPM EM USD Bond,USD,bonds-em
+LEMB,JPM EM Local Ccy Bond,USD,bonds-em
+
+IB01.L,$ Treasury Bond 0-1yr,USD,cash
+ERNS.L,£ Ultrashort Bond,GBP,cash
+
+HYG,High Yield Core,USD,bonds
+AGG,Core US Aggregate Bond,USD,bonds
+IEF,7-10 Treasury,USD,bonds
+TLT,20+ Treasury,USD,bonds
+IDTG.L,$ Treasury Bond 20+yr - GBPH,GBP,bonds
+GLTL.L,SPDR BBG 15+ Year Gilt,GBP,bonds
+IBGL.AS,€ Govt Bond 15-30yr,EUR,bonds
+
+ITPG.L,$ TIPS - GBPH,GBP,bonds-il
+STIP,0-5 Year TIPS Bond,USD,bonds-il
+TIP,Tips Bond,USD,bonds-il
+INXG.L,£ Index-Linked Gilts,GBP,bonds-il
+LTPZ,PIMCO 15+ Year US TIPS,USD,bonds-il
+
+GLD,SPDR Gold Shares,USD,commod
+GSG,S&P GSCI Commodity-Indexed Trust,USD,commod

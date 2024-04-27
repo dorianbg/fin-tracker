@@ -1,4 +1,5 @@
 import argparse
+import datetime
 import logging
 import time
 import pandas as pd
@@ -18,6 +19,7 @@ import traceback
 from sqlalchemy import create_engine
 
 __duckdb_conn = None
+date_fmt = "%Y-%m-%d"
 
 
 def get_transformed_df(job: JobDef):
@@ -25,8 +27,8 @@ def get_transformed_df(job: JobDef):
     etf.tz = "UTC"
     df = etf.history(
         interval="1d",
-        start=job.start_date.strftime("%Y-%m-%d"),
-        end=job.end_date.strftime("%Y-%m-%d"),
+        start=job.start_date.strftime(date_fmt),
+        end=job.end_date.strftime(date_fmt),
     )
     df = df.reset_index()
     df["ticker"] = job.ticker_full.split(".")[0]
@@ -61,10 +63,13 @@ def check_for_dividends(df: pd.DataFrame) -> bool:
 
 def check_existing_data(ticker_full: str) -> bool:
     global __duckdb_conn
-    res = __duckdb_conn.execute(
-        f"select count(*) as cnt from {consts.hist_prices_table_name} "
-        f"where ticker_full like '%{ticker_full}%'"
-    ).fetchdf()
+    query = (
+        f"select count(*) as cnt "
+        f"from {consts.hist_prices_table_name} "
+        f"where ticker like '{ticker_full}'"
+    )
+
+    res = __duckdb_conn.execute(query=query).fetchdf()
     return res["cnt"][0] > 0
 
 
@@ -74,8 +79,8 @@ def backup_existing_data(ticker_full: str) -> int:
         f"select * from {consts.hist_prices_table_name} "
         f"where ticker_full like '%{ticker_full}%'"
     ).fetchdf()
-    min_date = res["date"].min().strftime("%Y-%m-%d")
-    max_date = res["date"].max().strftime("%Y-%m-%d")
+    min_date = res["date"].min().strftime(date_fmt)
+    max_date = res["date"].max().strftime(date_fmt)
     csv_path = add_csv_ext(
         create_out_path(
             dir=consts.store_raw_dir,
@@ -110,9 +115,15 @@ def create_out_path(dir: str, ticker_full: str, start_date: str, end_date: str):
 
 
 def execute_job(job: JobDef):
-    start_date_str: str = job.start_date.strftime("%Y%m%d")
-    end_date_str: str = job.end_date.strftime("%Y%m%d")
-    if start_date_str == end_date_str or start_date_str > end_date_str:
+    fmt = "%Y%m%d"
+    start_date_str: str = job.start_date.strftime(fmt)
+    end_date_str: str = job.end_date.strftime(fmt)
+    exec_date = datetime.datetime.now(tz=datetime.timezone.utc)
+    if (start_date_str > end_date_str) or (
+        start_date_str == end_date_str
+        and exec_date.hour < 20
+        and exec_date.strftime(fmt) == start_date_str
+    ):
         return pd.DataFrame()
 
     base_temp_path = create_out_path(
@@ -130,12 +141,12 @@ def execute_job(job: JobDef):
         logging.info(f"Data {pickle_path} already exists")
         return pd.read_pickle(pickle_path)
     # call YF API
-    hist: pd.DataFrame = get_transformed_df(job=job)
+    new_data: pd.DataFrame = get_transformed_df(job=job)
     if args.rewrite_all and args.skip_backup:
         delete_existing_data(ticker_full=job.ticker_full)
         logging.info(f"Deleted existing data for {job}")
-    # issue with YF adjusting dividends which skews past prices - we then back, delete and re-download the data
-    elif check_for_dividends(hist) or args.rewrite_all:
+    # issue with YF adjusting dividends which skews past prices - we then backup, delete and re-download the data
+    elif check_for_dividends(new_data) or args.rewrite_all:
         if check_existing_data(ticker_full=job.ticker_full):
             logging.info(f"Found dividends for {job}")
             backup_row_count = backup_existing_data(ticker_full=job.ticker_full)
@@ -143,17 +154,17 @@ def execute_job(job: JobDef):
             if backup_row_count > 0:
                 if delete_existing_data(ticker_full=job.ticker_full):
                     logging.info(f"Deleted existing data for {job}")
-                    # return pd.DataFrame()
+                    return pd.DataFrame()
 
     logging.info(
-        f"Downloaded {len(hist)} rows for {job.ticker_full} in time range {start_date_str} and {end_date_str}"
+        f"Downloaded {len(new_data)} rows for {job.ticker_full} in time range {start_date_str} and {end_date_str}"
     )
-    if not hist.empty:
-        hist.to_csv(csv_path)
-        hist.to_pickle(pickle_path)
+    if not new_data.empty:
+        new_data.to_csv(csv_path)
+        new_data.to_pickle(pickle_path)
 
     time.sleep(3)
-    return hist
+    return new_data
 
 
 def merge_dfs(dfs_to_insert):

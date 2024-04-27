@@ -157,14 +157,45 @@ WINDOW
             ORDER BY "date" ASC
             RANGE BETWEEN INTERVAL 63 DAYS PRECEDING AND current row
     )
+), stage3 as (
+    select
+        s.*,
+        round(vol.vol_1d * 100, 2) as vol_1d,
+        round(vol.vol_1y * 100, 2) as vol_1y
+    from stage2 s
+    left join instrument_annualised_volatility vol
+        on s.ticker_full = vol.ticker_full
+    where rown = 1
+    -- and r_1w between -50 and 50
+
 )
 select
-    s.*,
-    round(vol.vol_1d * 100, 2) as vol_1d,
-    round(vol.vol_1y * 100, 2) as vol_1y
-from stage2 s
-left join instrument_annualised_volatility vol
-    on s.ticker_full = vol.ticker_full
-where rown = 1
--- and r_1w between -50 and 50
-order by s.dt desc;
+    s3.*,
+    round((r_1d - r_1d_rf)/vol_1y, 2) as r_1d_s,
+    round((r_1w - r_1w_rf)/vol_1y, 2) as r_1w_s,
+    round((r_2w - r_2w_rf)/vol_1y, 2) as r_2w_s,
+    round((r_1mo - r_1mo_rf)/vol_1y, 2) as r_1mo_s,
+    round((r_3mo - r_3mo_rf)/vol_1y, 2) as r_3mo_s,
+    round((r_6mo - r_6mo_rf)/vol_1y, 2) as r_6mo_s,
+    round((r_1y - r_1y_rf)/vol_1y, 2) as r_1y_s,
+    round((r_2y - r_2y_rf)/vol_1y, 2) as r_2y_s,
+    round((r_3y - r_3y_rf)/vol_1y, 2) as r_3y_s,
+    round((r_5y - r_5y_rf)/vol_1y, 2) as r_5y_s
+from stage3 as s3
+left join (
+    select
+        date,
+        r_1d as r_1d_rf,
+        r_1w as r_1w_rf,
+        r_2w as r_2w_rf,
+        r_1mo as r_1mo_rf,
+        r_3mo as r_3mo_rf,
+        r_6mo as r_6mo_rf,
+        r_1y as r_1y_rf,
+        r_2y as r_2y_rf,
+        r_3y as r_3y_rf,
+        r_5y as r_5y_rf
+    from stage2
+    where ticker = 'ERNS'
+) s4 on s3.date = s4.date
+order by s3.dt desc;
