@@ -72,11 +72,10 @@ daily_volatility AS (
 -- Step 3: Annualize Volatility
 SELECT
     ticker_full,
-    daily_volatility as vol_1d,
-    daily_volatility * SQRT(252) AS vol_1y
+    round(daily_volatility * 100, 2) as vol_1d,
+    round(daily_volatility * SQRT(252) * 100, 2) as vol_1y
 FROM
     daily_volatility;
-
 
 create or replace view latest_performance as
 with stage1 as (
@@ -157,18 +156,17 @@ WINDOW
             ORDER BY "date" ASC
             RANGE BETWEEN INTERVAL 63 DAYS PRECEDING AND current row
     )
-), stage3 as (
-    select
-        s.*,
-        round(vol.vol_1d * 100, 2) as vol_1d,
-        round(vol.vol_1y * 100, 2) as vol_1y
-    from stage2 s
-    left join instrument_annualised_volatility vol
-        on s.ticker_full = vol.ticker_full
-    where rown = 1
-    -- and r_1w between -50 and 50
-
 )
+select
+    s.*,
+    vol_1d,
+    vol_1y
+from stage2 s
+left join instrument_annualised_volatility vol
+    on s.ticker_full = vol.ticker_full
+where rown = 1;
+
+create or replace view latest_performance_sharpe as
 select
     s3.*,
     round((r_1d - r_1d_rf)/vol_1y, 2) as r_1d_s,
@@ -181,8 +179,9 @@ select
     round((r_2y - r_2y_rf)/vol_1y, 2) as r_2y_s,
     round((r_3y - r_3y_rf)/vol_1y, 2) as r_3y_s,
     round((r_5y - r_5y_rf)/vol_1y, 2) as r_5y_s
-from stage3 as s3
-left join (
+from latest_performance as s3
+CROSS JOIN (
+--     risk free rate
     select
         date,
         r_1d as r_1d_rf,
@@ -195,7 +194,7 @@ left join (
         r_2y as r_2y_rf,
         r_3y as r_3y_rf,
         r_5y as r_5y_rf
-    from stage2
+    from latest_performance
     where ticker = 'ERNS'
-) s4 on s3.date = s4.date
+) s4
 order by s3.dt desc;
